@@ -1,0 +1,14 @@
+import express from 'express';
+import cors from 'cors';
+import productRoutes from './routes/productRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
+const app = express();
+const PORT = process.env.PORT || 3000;
+app.use(cors({ origin: ['http://localhost:5173', 'http://127.0.0.1:5173'] }));
+app.use(express.json());
+app.get('/api/health', (req, res) => res.json({ success: true, message: 'API Nuvia Hogar operativa.', timestamp: new Date().toISOString() }));
+app.use('/api/products', productRoutes);
+app.use('/api/orders', orderRoutes);
+app.use((req, res) => res.status(404).json({ success: false, message: 'Ruta no encontrada.' }));
+app.use((error, req, res, next) => { console.error(error); res.status(500).json({ success: false, message: 'Error interno del servidor.' }); });
+app.listen(PORT, () => console.log(`Servidor Nuvia Hogar activo en http://localhost:${PORT}`));
