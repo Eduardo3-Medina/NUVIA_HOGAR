@@ -1,3 +1,11 @@
+# Archivos de compilación
+dist/
+client/dist/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
 .DS_Store
 Thumbs.db
 .vscode/
